@@ -17,7 +17,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 		SetWindowLongPtr(hwnd, GWLP_USERDATA, (LONG_PTR)window);
 		//THIS SNIPPET OF CODE, INSTEAD, WILL SAVE THE POINTER "THIS" IN A SPECIAL
 			// STRUCTURE DATA IDENTIFIED BY HWND
-
+		window->setHWND(hwnd);
 		window->onCreate();
 		break;
 	}
@@ -107,6 +107,18 @@ bool Window::release()
 bool Window::isRun()
 {
 	return m_is_run;
+}
+
+RECT Window::getClientWindowRect()
+{
+	RECT rc;
+	::GetClientRect(this->m_hwnd, &rc);
+	return rc;
+}
+
+void Window::setHWND(HWND hwnd)
+{
+	this->m_hwnd = hwnd;
 }
 
 void Window::onCreate()
